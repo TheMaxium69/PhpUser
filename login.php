@@ -15,17 +15,26 @@ if(isset($_POST['formlogin'])){
         if ($result == true)
         {
 
-            foreach ($result as $value)
+            foreach ($result as $value) {
 
-            if ($passwordForm == $value['password'])
-            {
-                echo "On revele la phrase";
+                if ($passwordForm == $value['password']) {
+                    echo "On revele la phrase". "<hr>";
+                    $isLogged = true;
+
+                    $requete2 = "SELECT * FROM secret WHERE id = 1";
+
+                    $result2 = mysqli_query($db, $requete2);
+
+                    foreach ($result2 as $value2) {
+
+                        echo $value2['content'];
+                    }
 
 
+                } else {
+                    echo "Il ne s'agit pas du bon mot de passe.";
 
-            } else {
-                echo "Il ne s'agit pas du bon mot de passe.";
-
+                }
             }
 
         } else {
