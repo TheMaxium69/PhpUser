@@ -2,7 +2,6 @@
 include "app.php";
 
 if(isset($_POST['formlogin'])){
-
     if(!empty($_POST['username']) && !empty($_POST['password'])){
 
         $usernameForm = $_POST['username'];
@@ -12,36 +11,28 @@ if(isset($_POST['formlogin'])){
 
         $result = mysqli_query($db, $requete);
 
-        if ($result == true)
-        {
+        var_dump($result);
+            foreach($result as $value){
+                    echo "je siis da,ns le foreach";
+                    if ($passwordForm == $value['password']) {
+                        echo "On revele la phrase" . "<hr>";
+                        $isLogged = true;
 
-            foreach ($result as $value) {
+                        $requete2 = "SELECT * FROM secret WHERE id = 1";
 
-                if ($passwordForm == $value['password']) {
-                    echo "On revele la phrase". "<hr>";
-                    $isLogged = true;
+                        $result2 = mysqli_query($db, $requete2);
 
-                    $requete2 = "SELECT * FROM secret WHERE id = 1";
+                        foreach ($result2 as $value2) {
 
-                    $result2 = mysqli_query($db, $requete2);
+                            echo $value2['content'];
+                        }
 
-                    foreach ($result2 as $value2) {
 
-                        echo $value2['content'];
+                    } else {
+                        echo "Il ne s'agit pas du bon mot de passe.";
+
                     }
-
-
-                } else {
-                    echo "Il ne s'agit pas du bon mot de passe.";
-
-                }
             }
-
-        } else {
-
-            echo "Aucun compte n'est associé à cette username :" . $_POST['username'] . " .";
-
-        }
 
     } else {
         echo "Veuillez completer l'ensemble des champs.";
