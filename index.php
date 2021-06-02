@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,10 @@
         </button>
     </div>
 </nav>
-<?php if (!$isLogged) {?>
+
+
+<?php if (!$isLoggedIn && !$modeInscription) {
+    ?>
 <div class="container">
     <form method="post">
         <div class="form-group">
@@ -31,14 +34,26 @@
             <input type="password" class="form-control" name="password">
         </div>
         <div class="form-group">
-            <input type="submit" name="formlogin" value="Log in" class="btn btn-success">
+            <input type="submit" name="formlogin" value="Log in" class="btn btn-danger">
         </div>
     </form>
+
+    <form method="POST">
+        <button class="btn btn-outline-danger" type="submit" name="modeInscription" value="on">Créer un compte</button>
+    </form>
     <hr>
-    <?php }else{?>
-        <div class="maClasse">
-            <p>On revelera les secrets</p>
-        </div>
+    <?php }else if ($isLoggedIn){?>
+
+
+    <div class="maClasse">
+
+        <p> <?php echo $leSecret; ?></p>
+
+
+
+
+
+
         <?php } ?>
 
     <?php if ($modeInscription) {?>
@@ -56,9 +71,15 @@
             <input type="password" class="form-control" name="passwordRetypeSignUp">
         </div>
         <div class="form-group">
-            <input type="submit" value="Sign Up" class="btn btn-success">
+
+            <input type="hidden" name="modeInscription" value="on"></input>
+            <input type="submit" name="formSign" value="Sign Up" class="btn btn-danger">
         </div>
     </form>
+
+        <form method="POST">
+            <button class="btn btn-outline-danger" name="modeInscription" value="off">Se connecter</button>
+        </form>
     <hr>
     <?php }?>
 </div>

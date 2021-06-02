@@ -1,5 +1,4 @@
 <?php
-include "app.php";
 
 if(isset($_POST['formlogin'])){
     if(!empty($_POST['username']) && !empty($_POST['password'])){
@@ -9,7 +8,9 @@ if(isset($_POST['formlogin'])){
 
         $requete = "SELECT * FROM users WHERE username='$usernameForm'";
 
+        require_once "auth/db.php";
         $result = mysqli_query($db, $requete);
+
         $numRows = mysqli_num_rows($result);
 
         if ($numRows == 1) {
@@ -17,17 +18,6 @@ if(isset($_POST['formlogin'])){
                 if ($passwordForm == $value['password']) {
                     echo "On revele la phrase" . "<hr>";
                     $isLogged = true;
-
-                    $requete2 = "SELECT * FROM secret WHERE id = 1";
-
-                    $result2 = mysqli_query($db, $requete2);
-
-                    foreach ($result2 as $value2) {
-
-                        echo $value2['content'];
-                    }
-
-
                 } else {
                     echo "Il ne s'agit pas du bon mot de passe.";
 
