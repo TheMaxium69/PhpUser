@@ -10,29 +10,32 @@ if(isset($_POST['formlogin'])){
         $requete = "SELECT * FROM users WHERE username='$usernameForm'";
 
         $result = mysqli_query($db, $requete);
+        $numRows = mysqli_num_rows($result);
 
-        var_dump($result);
-            foreach($result as $value){
-                    echo "je siis da,ns le foreach";
-                    if ($passwordForm == $value['password']) {
-                        echo "On revele la phrase" . "<hr>";
-                        $isLogged = true;
+        if ($numRows == 1) {
+            foreach ($result as $value) {
+                if ($passwordForm == $value['password']) {
+                    echo "On revele la phrase" . "<hr>";
+                    $isLogged = true;
 
-                        $requete2 = "SELECT * FROM secret WHERE id = 1";
+                    $requete2 = "SELECT * FROM secret WHERE id = 1";
 
-                        $result2 = mysqli_query($db, $requete2);
+                    $result2 = mysqli_query($db, $requete2);
 
-                        foreach ($result2 as $value2) {
+                    foreach ($result2 as $value2) {
 
-                            echo $value2['content'];
-                        }
-
-
-                    } else {
-                        echo "Il ne s'agit pas du bon mot de passe.";
-
+                        echo $value2['content'];
                     }
+
+
+                } else {
+                    echo "Il ne s'agit pas du bon mot de passe.";
+
+                }
             }
+        } else {
+            echo "Aucun compte n'est associé à cette username :" . $usernameForm . " .";
+        }
 
     } else {
         echo "Veuillez completer l'ensemble des champs.";
